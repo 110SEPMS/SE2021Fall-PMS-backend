@@ -10,6 +10,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace project_manage_system_backend.Services
 {
@@ -37,7 +38,7 @@ namespace project_manage_system_backend.Services
             if (!string.IsNullOrEmpty(accessToken))
             {
                 User user = await RequestGithubUserInfo(accessToken);
-
+                //List<> test = await RequestGithubRepoInfo(accessToken); //試著取Repo的API
                 if (!_userService.CheckUserExist(user.Account))
                 {
                     _userService.CreateUser(user);
@@ -121,5 +122,31 @@ namespace project_manage_system_backend.Services
             };
             return result;
         }
+
+        //public async Task<List<ResponseGithubRepoInfoDto>> RequestGithubRepoInfo(string accessToken) // 取得Repo資訊(測試API用法)
+        //{
+        //    const string url = "https://api.github.com/user/repos";
+
+        //    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", accessToken);
+        //    _httpClient.DefaultRequestHeaders.Add("User-Agent", "request");
+        //    var responseTask = await _httpClient.GetAsync(url);
+
+        //    string resultContent = await responseTask.Content.ReadAsStringAsync();
+        //    var repos = JsonSerializer.Deserialize<List<ResponseGithubRepoInfoDto>>(resultContent);//反序列化
+        //    int testValue = repos.Count; //取得Repo的資料量(測試用)
+          
+        //    /*User result = new User
+        //    {
+
+        //        Account = "github_" + userInfo.login,
+        //        Name = userInfo.login,
+        //        AvatarUrl = userInfo.avatar_url,
+        //        Authority = "User"
+        //    };
+        //    */
+        //    return repos;
+        //}
+    
+
     }
 }
