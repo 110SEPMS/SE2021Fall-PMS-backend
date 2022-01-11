@@ -23,8 +23,9 @@ namespace project_manage_system_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> AddRepo(RequestAddRepoDto addRepoDto)
         {
-            var response = await _repoService.CheckRepoExist(addRepoDto.url);
-
+            //Request.Headers.TryGetValue("Authorization",out var token); //ìßâﬂHeaderäléÊå¥êÊèäë∂â∫ò“ìI Auth Token
+            //var response = await _repoService.CheckRepoExist(addRepoDto.url);   
+            var response = await _repoService.CheckRepoExistAdmin(addRepoDto.url, addRepoDto.accessToken);
             if (response.IsSucess)
             {
                 try

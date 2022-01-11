@@ -7,5 +7,7 @@
         public string Authority { get; set; }
 
         public string UserAccount { get; set; }
+
+        public string GithubToken { get; set; }
     }
 }

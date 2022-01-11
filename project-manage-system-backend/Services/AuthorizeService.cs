@@ -48,7 +48,9 @@ namespace project_manage_system_backend.Services
                 {
                     Token = _jwtHelper.GenerateToken(user.Account, accessToken, user.Authority),
                     Authority = user.Authority,
-                    UserAccount = user.Account
+                    UserAccount = user.Account,
+                    GithubToken = accessToken
+              
                 };
             }
             else
@@ -68,7 +70,8 @@ namespace project_manage_system_backend.Services
                 {
                     Token = _jwtHelper.GenerateToken(loginUser.Account, accessToken, loginUser.Authority),
                     Authority = loginUser.Authority,
-                    UserAccount = loginUser.Account
+                    UserAccount = loginUser.Account,
+                    GithubToken = accessToken
                 };
             }
             return null;

@@ -24,5 +24,7 @@
         /// sonarqube projectkey
         /// </summary>
         public string projectKey { get; set; }
+
+        public string accessToken { get; set; }
     }
 }

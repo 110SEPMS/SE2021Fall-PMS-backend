@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,6 +32,26 @@ namespace project_manage_system_backend.Services
             url = url.Replace(".git", "");
             url = url.Replace("github.com", "api.github.com/repos");
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "request");
+            var result = await _httpClient.GetAsync(url);
+            string content = await result.Content.ReadAsStringAsync();
+            var msg = JsonSerializer.Deserialize<ResponseGithubRepoInfoDto>(content);
+            msg.IsSucess = string.IsNullOrEmpty(msg.message);
+            return msg;
+        }
+
+        public async Task<ResponseGithubRepoInfoDto> CheckRepoExistAdmin(string url, string token)
+        {
+
+            const string GITHUB_COM = "github.com";
+            string matchPatten = $@"^http(s)?://{GITHUB_COM}/([\w-]+.)+[\w-]+(/[\w- ./?%&=])?$";
+            
+            if (!Regex.IsMatch(url, matchPatten))
+                return new ResponseGithubRepoInfoDto() { IsSucess = false, message = "Url Error" };
+
+            url = url.Replace(".git", "");
+            url = url.Replace("github.com", "api.github.com/repos");
+            _httpClient.DefaultRequestHeaders.Add("User-Agent", "request");
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
             var result = await _httpClient.GetAsync(url);
             string content = await result.Content.ReadAsStringAsync();
             var msg = JsonSerializer.Deserialize<ResponseGithubRepoInfoDto>(content);
