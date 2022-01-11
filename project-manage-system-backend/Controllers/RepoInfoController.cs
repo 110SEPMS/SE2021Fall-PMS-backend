@@ -29,7 +29,8 @@ namespace project_manage_system_backend.Controllers
         [HttpGet("codebase/{repoId}")]
         public async Task<IActionResult> GetCodebase(int repoId)
         {
-            return Ok(await _repoInfoService.RequestCodebase(repoId));
+            string oauth_token = User.Claims.FirstOrDefault(c => c.Type.Equals("oauth")).Value;
+            return Ok(await _repoInfoService.RequestCodebase(repoId, oauth_token));
         }
 
         [Authorize]
