@@ -26,6 +26,7 @@ namespace project_manage_system_backend.Models
         /// </summary>
         public string Authority { get; set; }
 
+
         public List<UserProject> Projects { get; set; } = new List<UserProject>();
     }
 }
